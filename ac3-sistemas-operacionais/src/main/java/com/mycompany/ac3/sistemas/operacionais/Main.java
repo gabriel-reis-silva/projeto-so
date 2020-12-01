@@ -5,6 +5,8 @@
  */
 package com.mycompany.ac3.sistemas.operacionais;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import org.springframework.jdbc.core.JdbcTemplate;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
@@ -21,13 +23,23 @@ public class Main {
         HardwareAbstractionLayer hal = si.getHardware();
         Cpu cpu = new Cpu(hal);
         Network net = new Network();
+        int delay = 5000;   // delay de 5 seg.
+        int interval = 5000;  // intervalo de 1 seg.
+        Timer timer = new Timer();
 
-        System.out.println("Uso de cpu " + cpu.cpuUsage());
-        System.out.println("Bytes recebidos: " + net.bytesRec());
-        System.out.println("Bytes enviados: " + net.bytesEnv());
-        
-        JdbcTemplate con = new JdbcTemplate(conn.getDataSource());
-        String insertStatement = "insert into leitura (cpuLeitura, bytesRcv, bytesSnd) values (?, ?, ?)";
-        con.update(insertStatement, cpu.cpuUsage(), net.bytesRec(), net.bytesEnv());
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Uso de cpu " + cpu.cpuUsage());
+                System.out.println("Bytes recebidos: " + net.bytesRec());
+                System.out.println("Bytes enviados: " + net.bytesEnv());
+
+                JdbcTemplate con = new JdbcTemplate(conn.getDataSource());
+                String insertStatement = "insert into leitura2 (cpuLeitura, bytesRcv, bytesSnd) values (?, ?, ?)";
+                con.update(insertStatement, cpu.cpuUsage(), net.bytesRec(), net.bytesEnv());
+            }
+        }, 2000, 2000);
+
     }
+
 }

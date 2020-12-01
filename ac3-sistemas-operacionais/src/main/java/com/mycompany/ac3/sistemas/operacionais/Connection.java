@@ -17,10 +17,13 @@ public class Connection {
 
     public Connection() {
         this.datasource = new BasicDataSource();
-        this.datasource.setDriverClassName ("com.mysql.cj.jdbc.Driver");
-        this.datasource.setUrl("jdbc:mysql://localhost:3306/banco1?useTimezone=true&serverTimezone=UTC");
-        this.datasource.setUsername("root");
-        this.datasource.setPassword("urubu100");
+        this.datasource.setDriverClassName ("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        this.datasource.setUrl("jdbc:sqlserver://monsysclin.database.windows.net:1433;"
+                + "database=Monsysclin;user=administrador@monsysclin;"
+                + "password=#Gfgrupo6;encrypt=true;"
+                + "trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30");
+        this.datasource.setUsername("administrador");
+        this.datasource.setPassword("#Gfgrupo6");
     }
     
     
