@@ -33,7 +33,7 @@ public class Main {
                 System.out.println("Uso de cpu " + cpu.cpuUsage());
                 System.out.println("Bytes recebidos: " + net.bytesRec());
                 System.out.println("Bytes enviados: " + net.bytesEnv());
-
+                
                 JdbcTemplate con = new JdbcTemplate(conn.getDataSource());
                 String insertStatement = "insert into leitura2 (cpuLeitura, bytesRcv, bytesSnd) values (?, ?, ?)";
                 con.update(insertStatement, cpu.cpuUsage(), net.bytesRec(), net.bytesEnv());
